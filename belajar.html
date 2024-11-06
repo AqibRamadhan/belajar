@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>belajar</title>
+    <link rel="stylesheet" href="style1.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="todo-container">
+        <h1>Aqib</h1>
+        <input type="text" id="taskInput" placeholder="Task" required>
+        <div class="date-inputs">
+            <label>Start Date:
+                <input type="date" id="startDate">
+            </label>
+            <label>Target Date:
+                <input type="date" id="targetDate">
+            </label>
+        </div>
+        <button id="addTaskButton">Add Task</button>
+        
+        <table id="taskTable">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Start Date</th>
+                    <th>Target Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="taskList">
+                <!-- Task list will appear here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#addTaskButton").click(function() {
+                // Get values from input
+                const task = $("#taskInput").val();
+                const startDate = $("#startDate").val();
+                const targetDate = $("#targetDate").val();
+
+                // Check if all fields are filled
+                if (task && startDate && targetDate) {
+                    // Create elements using different methods
+                    const taskElement = $("<td></td>").text(task);
+                    const startElement = $("<td></td>").text(startDate);
+                    const targetElement = $("<td></td>").text(targetDate);
+                    
+                    const deleteButton = document.createElement("span");
+                    deleteButton.innerHTML = "Delete";
+                    deleteButton.classList.add("delete-button");
+                    
+                    const actionElement = $("<td></td>").append(deleteButton);
+                    const newRow = $("<tr></tr>");
+
+                    // Append elements to the new row
+                    newRow.append(taskElement, startElement, targetElement, actionElement);
+
+                    // Insert the new row after the last row in the table
+                    $("#taskList").append(newRow);
+
+                    // Clear input fields
+                    $("#taskInput").val('');
+                    $("#startDate").val('');
+                    $("#targetDate").val('');
+                } else {
+                    alert("Please fill all fields!");
+                }
+            });
+
+            // Delete task function
+            $("#taskTable").on("click", ".delete-button", function() {
+                $(this).closest("tr").remove();
+            });
+        });
+    </script>
+</body>
+</html>
